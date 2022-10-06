@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/student-courses?createDatabaseIfNotExist=true&useSSL=false
+    password: ''
+  h2:
+    console:
+      enabled: 'true'
+  application:
+    name: entreprise-personnel
+  liquibase:
+    enabled: 'true'
+    change-log: classpath:db/changelog/changelog-master.xml
+  jpa:
+    hibernate:
+      ddl-auto: none
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  port : 8083

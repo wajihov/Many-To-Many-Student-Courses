@@ -1,0 +1,312 @@
+openapi: 3.0.2
+info:
+  title: Many-To-Many Student-Courses
+  version: 1.0.0
+  description: RelationShip Many To Mayn
+paths:
+  /students:
+    get:
+      tags:
+        - student
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentDto'
+          description: Find all students in the Base
+      operationId: findStudents
+      summary: Get all students
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDto'
+        required: true
+      tags:
+        - student
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDto'
+          description: A new student is added successfully
+      operationId: createStudent
+      summary: Add a new student
+  '/students/{id}':
+    get:
+      tags:
+        - student
+      parameters:
+        - name: id
+          description: A unique identifier for a `student Dto`.
+          schema:
+            format: int64
+            type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDto'
+          description: Search student with id
+        '404':
+          description: Student not found
+      operationId: findStudentById
+      summary: find a student by id
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDto'
+        required: true
+      tags:
+        - student
+      parameters:
+        - name: id
+          description: A unique identifier for a `student Dto`.
+          schema:
+            format: int64
+            type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDto'
+          description: the student is successfully changed
+      operationId: updateStudent
+      summary: Update student
+    delete:
+      tags:
+        - student
+      parameters:
+        - name: id
+          description: A unique identifier for a `student Dto`.
+          schema:
+            format: int64
+            type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          description: the student is successfully deleted
+      operationId: deleteStudent
+      summary: delete student
+    parameters:
+      - name: id
+        description: A unique identifier for a `student Dto`.
+        schema:
+          format: int64
+          type: integer
+        in: path
+        required: true
+  /courses:
+    get:
+      tags:
+        - course
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoursesDto'
+          description: all courses in database
+      operationId: allCourses
+      summary: All courses in the database
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoursesDto'
+        required: true
+      tags:
+        - course
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoursesDto'
+          description: Created a new Course
+      operationId: createCourse
+      summary: Create a new Course
+  '/courses/{id}':
+    get:
+      tags:
+        - course
+      parameters:
+        - name: id
+          description: A unique identifier for a `courses Dto`.
+          schema:
+            format: int64
+            type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoursesDto'
+          description: 'Find course by id '
+        '404':
+          description: 'Course not found '
+      operationId: findCourseById
+      summary: get course by id
+      description: A unique identifier for a `CoursesDto`.
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoursesDto'
+        required: true
+      tags:
+        - course
+      parameters:
+        - name: id
+          description: A unique identifier for a `courses Dto`.
+          schema:
+            format: int64
+            type: integer
+          in: path
+          required: true
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoursesDto'
+          description: The course has been successfully modified
+      summary: Modify course
+    delete:
+      tags:
+        - course
+      parameters:
+        - name: id
+          description: A unique identifier for a `courses Dto`.
+          schema:
+            format: int64
+            type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          description: The course was successfully deleted
+      operationId: deleteCourse
+      summary: Delete course
+    parameters:
+      - name: id
+        description: A unique identifier for a `courses Dto`.
+        schema:
+          format: int64
+          type: integer
+        in: path
+        required: true
+  '/courses/{name}':
+    get:
+      tags:
+        - course
+      parameters:
+        - name: name
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoursesDto'
+          description: The course has been found
+        '404':
+          description: 'The course with name not found '
+      operationId: findCourseByName
+      summary: Find Course by name
+    parameters:
+      - name: name
+        description: search name
+        schema:
+          type: string
+        in: path
+        required: true
+  '/students/{name}':
+    get:
+      tags:
+        - student
+      parameters:
+        - name: name
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentDto'
+          description: 'The search for the student with name is found '
+        '404':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentDto'
+          description: Student search did not find the name
+      operationId: findStudentByName
+      summary: Find student by name
+    parameters:
+      - name: name
+        description: search name
+        schema:
+          type: string
+        in: path
+        required: true
+components:
+  schemas:
+    StudentDto:
+      description: Student Dto
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        grade:
+          type: string
+        date_birth:
+          type: string
+    CoursesDto:
+      description: Course Dto
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        id:
+          format: int64
+          type: integer
