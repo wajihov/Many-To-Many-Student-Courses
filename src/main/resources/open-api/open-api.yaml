@@ -282,6 +282,17 @@ paths:
         required: true
 components:
   schemas:
+    CoursesDto:
+      description: Course Dto
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        id:
+          format: int64
+          type: integer
     StudentDto:
       description: Student Dto
       type: object
@@ -299,14 +310,7 @@ components:
           type: string
         date_birth:
           type: string
-    CoursesDto:
-      description: Course Dto
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        id:
-          format: int64
-          type: integer
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoursesDto'

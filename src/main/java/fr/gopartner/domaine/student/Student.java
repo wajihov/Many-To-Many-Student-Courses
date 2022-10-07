@@ -1,5 +1,6 @@
 package fr.gopartner.domaine.student;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.gopartner.domaine.course.Course;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class Student {
     private String email;
     private String grade;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "students_courses",
             joinColumns = {
