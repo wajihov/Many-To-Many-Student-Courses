@@ -17,13 +17,6 @@ public class CourseController implements CoursesApiDelegate {
         this.courseService = courseService;
     }
 
-
-    @Override
-    public ResponseEntity<List<CoursesDto>> allCourses() {
-        List<CoursesDto> coursesDtos = courseService.findCourses();
-        return new ResponseEntity<>(coursesDtos, HttpStatus.OK);
-    }
-
     @Override
     public ResponseEntity<CoursesDto> coursesIdPut(Long id, CoursesDto coursesDto) {
         CoursesDto courseModified = courseService.updateCourse(id, coursesDto);
@@ -31,9 +24,15 @@ public class CourseController implements CoursesApiDelegate {
     }
 
     @Override
+    public ResponseEntity<List<CoursesDto>> allCourses(String name) {
+        List<CoursesDto> coursesDtoList = courseService.findCourses(name);
+        return new ResponseEntity<>(coursesDtoList, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<CoursesDto> createCourse(CoursesDto coursesDto) {
-        CoursesDto courseCreated = courseService.createCourse(coursesDto);
-        return new ResponseEntity<>(courseCreated, HttpStatus.CREATED);
+        CoursesDto coursesDtoSaved = courseService.createCourse(coursesDto);
+        return new ResponseEntity<>(coursesDtoSaved, HttpStatus.CREATED);
     }
 
     @Override
@@ -46,11 +45,5 @@ public class CourseController implements CoursesApiDelegate {
     public ResponseEntity<CoursesDto> findCourseById(Long id) {
         CoursesDto coursesDto = courseService.findCourseById(id);
         return new ResponseEntity<>(coursesDto, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<List<CoursesDto>> findCourseByName(String name) {
-        List<CoursesDto> coursesDtoList = courseService.getCoursesByName(name);
-        return new ResponseEntity<>(coursesDtoList, HttpStatus.OK);
     }
 }

@@ -8,6 +8,13 @@ paths:
     get:
       tags:
         - student
+      parameters:
+        -
+          name: name
+          description: ''
+          schema:
+            type: string
+          in: query
       responses:
         '200':
           content:
@@ -118,6 +125,13 @@ paths:
     get:
       tags:
         - course
+      parameters:
+        -
+          name: name
+          description: ''
+          schema:
+            type: string
+          in: query
       responses:
         '200':
           content:
@@ -222,76 +236,6 @@ paths:
         schema:
           format: int64
           type: integer
-        in: path
-        required: true
-  '/students/name/{name}':
-    get:
-      tags:
-        - student
-      parameters:
-        -
-          name: name
-          schema:
-            type: string
-          in: path
-          required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/StudentDto'
-          description: 'The search for the student with name is found '
-        '404':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/StudentDto'
-          description: Student search did not find the name
-      operationId: findStudentByName
-      summary: Find student by name
-    parameters:
-      -
-        name: name
-        description: search name
-        schema:
-          type: string
-        in: path
-        required: true
-  '/courses/name/{name}':
-    get:
-      tags:
-        - course
-      parameters:
-        -
-          name: name
-          schema:
-            type: string
-          in: path
-          required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CoursesDto'
-          description: The course has been found
-        '404':
-          description: 'The course with name not found '
-      operationId: findCourseByName
-      summary: Find Course by name
-    parameters:
-      -
-        name: name
-        description: search name
-        schema:
-          type: string
         in: path
         required: true
 components:

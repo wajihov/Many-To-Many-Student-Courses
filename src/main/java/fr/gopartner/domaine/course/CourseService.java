@@ -2,6 +2,7 @@ package fr.gopartner.domaine.course;
 
 import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.core.rest.Codes;
+import fr.gopartner.core.utils.StringUtils;
 import fr.gopartner.dto.CoursesDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,12 @@ public class CourseService {
         return coursesMapper.toDto(course);
     }
 
-    public List<CoursesDto> findCourses() {
-        List<Course> courses = courseRepository.findAll();
+    public List<CoursesDto> findCourses(String name) {
+        List<Course> courses;
+        if (StringUtils.isNotNullOrNotEmpty(name)) {
+            courses = courseRepository.findCourseByNameContaining(name);
+        } else
+            courses = courseRepository.findAll();
         log.info("The courses sought are {}.", courses.size());
         return coursesMapper.toDtos(courses);
     }
@@ -65,11 +70,5 @@ public class CourseService {
         course = courseRepository.save(course);
         log.info("The course was successfully changed.");
         return coursesMapper.toDto(course);
-    }
-
-    public List<CoursesDto> getCoursesByName(String name) {
-        List<Course> courses = courseRepository.findCourseByNameContaining(name);
-        log.info("Searched courses  are {}", courses.size());
-        return coursesMapper.toDtos(courses);
     }
 }

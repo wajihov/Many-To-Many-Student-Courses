@@ -19,7 +19,8 @@ public class StudentController implements StudentsApiDelegate {
 
     @Override
     public ResponseEntity<StudentDto> createStudent(StudentDto studentDto) {
-        return new ResponseEntity<>(studentService.createStudent(studentDto), HttpStatus.CREATED);
+        StudentDto studentDtoSaved = studentService.createStudent(studentDto);
+        return new ResponseEntity<>(studentDtoSaved, HttpStatus.CREATED);
     }
 
     @Override
@@ -35,15 +36,9 @@ public class StudentController implements StudentsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<StudentDto>> findStudentByName(String name) {
-        List<StudentDto> list = studentService.searchStudentByName(name);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<List<StudentDto>> findStudents() {
-        List<StudentDto> list = studentService.findAllStudents();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<List<StudentDto>> findStudents(String name) {
+        List<StudentDto> studentDtoList = studentService.findAllStudents(name);
+        return new ResponseEntity<>(studentDtoList, HttpStatus.OK);
     }
 
     @Override
@@ -51,4 +46,6 @@ public class StudentController implements StudentsApiDelegate {
         StudentDto changedStudent = studentService.updateStudent(id, studentDto);
         return new ResponseEntity<>(changedStudent, HttpStatus.OK);
     }
+
+
 }

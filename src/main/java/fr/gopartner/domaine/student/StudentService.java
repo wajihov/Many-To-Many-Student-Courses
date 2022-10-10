@@ -2,6 +2,7 @@ package fr.gopartner.domaine.student;
 
 import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.core.rest.Codes;
+import fr.gopartner.core.utils.StringUtils;
 import fr.gopartner.domaine.course.CourseService;
 import fr.gopartner.dto.CoursesDto;
 import fr.gopartner.dto.StudentDto;
@@ -46,11 +47,15 @@ public class StudentService {
         return studentMapper.toDto(student);
     }
 
-    public List<StudentDto> findAllStudents() {
-        List<Student> students = studentRepository.findAll();
-        List<StudentDto> studentDtos = studentMapper.toDtos(students);
+    public List<StudentDto> findAllStudents(String name) {
+        List<Student> students;
+        if (StringUtils.isNotNullOrNotEmpty(name)) {
+            students = studentRepository.findStudentByNameContaining(name);
+        } else {
+            students = studentRepository.findAll();
+        }
         log.info("All students in the database are displayed");
-        return studentDtos;
+        return studentMapper.toDtos(students);
     }
 
     public void deleteStudent(Long id) {
