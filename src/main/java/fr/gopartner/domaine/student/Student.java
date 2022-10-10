@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class Student {
     private Long id;
     private String name;
     private String lastname;
-    private LocalDateTime dateBirth;
+    private LocalDate dateBirth;
     private String email;
     private String grade;
 

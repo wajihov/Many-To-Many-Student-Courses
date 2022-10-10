@@ -42,7 +42,8 @@ paths:
       tags:
         - student
       parameters:
-        - name: id
+        -
+          name: id
           description: A unique identifier for a `student Dto`.
           schema:
             format: int64
@@ -70,7 +71,8 @@ paths:
       tags:
         - student
       parameters:
-        - name: id
+        -
+          name: id
           description: A unique identifier for a `student Dto`.
           schema:
             format: int64
@@ -90,7 +92,8 @@ paths:
       tags:
         - student
       parameters:
-        - name: id
+        -
+          name: id
           description: A unique identifier for a `student Dto`.
           schema:
             format: int64
@@ -103,7 +106,8 @@ paths:
       operationId: deleteStudent
       summary: delete student
     parameters:
-      - name: id
+      -
+        name: id
         description: A unique identifier for a `student Dto`.
         schema:
           format: int64
@@ -148,7 +152,8 @@ paths:
       tags:
         - course
       parameters:
-        - name: id
+        -
+          name: id
           description: A unique identifier for a `courses Dto`.
           schema:
             format: int64
@@ -177,7 +182,8 @@ paths:
       tags:
         - course
       parameters:
-        - name: id
+        -
+          name: id
           description: A unique identifier for a `courses Dto`.
           schema:
             format: int64
@@ -196,7 +202,8 @@ paths:
       tags:
         - course
       parameters:
-        - name: id
+        -
+          name: id
           description: A unique identifier for a `courses Dto`.
           schema:
             format: int64
@@ -209,47 +216,21 @@ paths:
       operationId: deleteCourse
       summary: Delete course
     parameters:
-      - name: id
+      -
+        name: id
         description: A unique identifier for a `courses Dto`.
         schema:
           format: int64
           type: integer
         in: path
         required: true
-  '/courses/{name}':
-    get:
-      tags:
-        - course
-      parameters:
-        - name: name
-          schema:
-            type: string
-          in: path
-          required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CoursesDto'
-          description: The course has been found
-        '404':
-          description: 'The course with name not found '
-      operationId: findCourseByName
-      summary: Find Course by name
-    parameters:
-      - name: name
-        description: search name
-        schema:
-          type: string
-        in: path
-        required: true
-  '/students/{name}':
+  '/students/name/{name}':
     get:
       tags:
         - student
       parameters:
-        - name: name
+        -
+          name: name
           schema:
             type: string
           in: path
@@ -274,7 +255,40 @@ paths:
       operationId: findStudentByName
       summary: Find student by name
     parameters:
-      - name: name
+      -
+        name: name
+        description: search name
+        schema:
+          type: string
+        in: path
+        required: true
+  '/courses/name/{name}':
+    get:
+      tags:
+        - course
+      parameters:
+        -
+          name: name
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoursesDto'
+          description: The course has been found
+        '404':
+          description: 'The course with name not found '
+      operationId: findCourseByName
+      summary: Find Course by name
+    parameters:
+      -
+        name: name
         description: search name
         schema:
           type: string

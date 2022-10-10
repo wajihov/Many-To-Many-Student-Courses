@@ -2,6 +2,7 @@ package fr.gopartner.domaine.course;
 
 import fr.gopartner.CoursesApiDelegate;
 import fr.gopartner.dto.CoursesDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,34 +11,46 @@ import java.util.List;
 @RestController
 public class CourseController implements CoursesApiDelegate {
 
+    private final CourseService courseService;
+
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
 
     @Override
     public ResponseEntity<List<CoursesDto>> allCourses() {
-        return CoursesApiDelegate.super.allCourses();
+        List<CoursesDto> coursesDtos = courseService.findCourses();
+        return new ResponseEntity<>(coursesDtos, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<CoursesDto> coursesIdPut(Long id, CoursesDto coursesDto) {
-        return CoursesApiDelegate.super.coursesIdPut(id, coursesDto);
+        CoursesDto courseModified = courseService.updateCourse(id, coursesDto);
+        return new ResponseEntity<>(courseModified, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<CoursesDto> createCourse(CoursesDto coursesDto) {
-        return CoursesApiDelegate.super.createCourse(coursesDto);
+        CoursesDto courseCreated = courseService.createCourse(coursesDto);
+        return new ResponseEntity<>(courseCreated, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Void> deleteCourse(Long id) {
-        return CoursesApiDelegate.super.deleteCourse(id);
+        courseService.deleteCourse(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<CoursesDto> findCourseById(Long id) {
-        return CoursesApiDelegate.super.findCourseById(id);
+        CoursesDto coursesDto = courseService.findCourseById(id);
+        return new ResponseEntity<>(coursesDto, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<CoursesDto> findCourseByName(String name) {
-        return CoursesApiDelegate.super.findCourseByName(name);
+    public ResponseEntity<List<CoursesDto>> findCourseByName(String name) {
+        List<CoursesDto> coursesDtoList = courseService.getCoursesByName(name);
+        return new ResponseEntity<>(coursesDtoList, HttpStatus.OK);
     }
 }
