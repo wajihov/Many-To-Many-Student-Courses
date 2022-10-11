@@ -6,7 +6,6 @@ import fr.gopartner.core.utils.CollectionUtils;
 import fr.gopartner.domaine.course.Course;
 import fr.gopartner.domaine.course.CoursesMapper;
 import fr.gopartner.dto.CoursesDto;
-import fr.gopartner.dto.StudentDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +21,7 @@ public class StudentMapper {
         this.coursesMapper = coursesMapper;
     }
 
-    public Student toEntity(StudentDto studentDto, List<CoursesDto> coursesDtos) {
+    public Student toEntity(fr.gopartner.dto.StudentDto studentDto, List<CoursesDto> coursesDtos) {
         if (studentDto == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
@@ -38,7 +37,7 @@ public class StudentMapper {
         return student;
     }
 
-    public Student toEntity(StudentDto studentDto) {
+    public Student toEntity(fr.gopartner.dto.StudentDto studentDto) {
         if (studentDto == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
@@ -57,12 +56,12 @@ public class StudentMapper {
 
     }
 
-    public StudentDto toDto(Student student) {
+    public fr.gopartner.dto.StudentDto toDto(Student student) {
         if (student == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
         List<Course> courses = student.getCourses();
-        return StudentDto.builder()
+        return fr.gopartner.dto.StudentDto.builder()
                 .id(student.getId())
                 .name(student.getName())
                 .lastname(student.getLastname())
@@ -73,7 +72,7 @@ public class StudentMapper {
                 .build();
     }
 
-    public List<StudentDto> toDtoList(List<Student> students) {
+    public List<fr.gopartner.dto.StudentDto> toDtoList(List<Student> students) {
         if (CollectionUtils.isNullOrEmpty(students)) {
             throw new StudentCourseException(Codes.ERROR_STUDENTS_NOT_FOUND);
         }

@@ -2,7 +2,6 @@ package fr.gopartner.domaine.student;
 
 import fr.gopartner.domaine.course.Course;
 import fr.gopartner.dto.CoursesDto;
-import fr.gopartner.dto.StudentDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ class StudentMapperTest {
             }
         });
         //WHEN
-        StudentDto studentDto = studentMapper.toDto(student);
+        fr.gopartner.dto.StudentDto studentDto = studentMapper.toDto(student);
         //THEN
         Assertions.assertEquals(student.getId(), studentDto.getId());
         Assertions.assertEquals(student.getName(), studentDto.getName());
@@ -54,7 +53,7 @@ class StudentMapperTest {
     @Test
     void Given_studentDto_WHEN_toStudent_THEN_SHOULD_return_student() {
         //GIVEN
-        StudentDto studentDto = new StudentDto();
+        fr.gopartner.dto.StudentDto studentDto = new fr.gopartner.dto.StudentDto();
         studentDto.setId(2L);
         studentDto.setName("jack");
         studentDto.setLastname("Jacopo");
@@ -127,7 +126,7 @@ class StudentMapperTest {
         studentList.add(firstStudent);
         studentList.add(secondStudent);
         //WHEN
-        List<StudentDto> studentDtoList = studentMapper.toDtoList(studentList);
+        List<fr.gopartner.dto.StudentDto> studentDtoList = studentMapper.toDtoList(studentList);
         //THEN
         Assertions.assertEquals(studentList.size(), studentDtoList.size());
         for (int i = 0; i < studentDtoList.size(); i++) {

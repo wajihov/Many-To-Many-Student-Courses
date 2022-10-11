@@ -5,7 +5,6 @@ import fr.gopartner.core.rest.Codes;
 import fr.gopartner.core.utils.StringUtils;
 import fr.gopartner.domaine.course.CourseService;
 import fr.gopartner.dto.CoursesDto;
-import fr.gopartner.dto.StudentDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -34,20 +33,20 @@ public class StudentService {
         return student;
     }
 
-    public StudentDto createStudent(StudentDto studentDto) {
+    public fr.gopartner.dto.StudentDto createStudent(fr.gopartner.dto.StudentDto studentDto) {
         Student student = studentMapper.toEntity(studentDto);
         student = studentRepository.save(student);
         log.info("the student is saved successfully");
         return studentMapper.toDto(student);
     }
 
-    public StudentDto findStudentById(Long id) {
+    public fr.gopartner.dto.StudentDto findStudentById(Long id) {
         Student student = searchStudent(id);
         log.info("The student you're looking for has been found");
         return studentMapper.toDto(student);
     }
 
-    public List<StudentDto> findAllStudents(String name) {
+    public List<fr.gopartner.dto.StudentDto> findAllStudents(String name) {
         List<Student> students;
         if (StringUtils.isNotNullOrNotEmpty(name)) {
             students = studentRepository.findStudentByNameContaining(name);
@@ -64,20 +63,14 @@ public class StudentService {
         log.info("the student with id {} has been successfully deleted", id);
     }
 
-    public StudentDto updateStudent(Long id, StudentDto studentDto) {
-        List<CoursesDto> coursesDtos = studentDto.getCourses();
-        coursesDtos = coursesDtos.stream().map(coursesDto ->
+    public fr.gopartner.dto.StudentDto updateStudent(Long id, fr.gopartner.dto.StudentDto studentDto) {
+        List<CoursesDto> coursesDtoList = studentDto.getCourses();
+        coursesDtoList = coursesDtoList.stream().map(coursesDto ->
                 courseService.updateCourse(coursesDto.getId(), coursesDto)).collect(Collectors.toList());
-        Student student = studentMapper.toEntity(studentDto, coursesDtos);
+        Student student = studentMapper.toEntity(studentDto, coursesDtoList);
         student.setId(id);
         student = studentRepository.save(student);
         log.info("The student with ID {} has been successfully changed", id);
         return studentMapper.toDto(student);
-    }
-
-    public List<StudentDto> searchStudentByName(String name) {
-        List<Student> students = studentRepository.findStudentByNameContaining(name);
-        log.info("The students named {} are displayed", name);
-        return studentMapper.toDtoList(students);
     }
 }

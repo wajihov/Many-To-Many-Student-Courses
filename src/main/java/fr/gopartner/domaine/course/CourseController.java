@@ -20,7 +20,7 @@ public class CourseController implements CoursesApiDelegate {
     @Override
     public ResponseEntity<CoursesDto> coursesIdPut(Long id, CoursesDto coursesDto) {
         CoursesDto courseModified = courseService.updateCourse(id, coursesDto);
-        return new ResponseEntity<>(courseModified, HttpStatus.OK);
+        return new ResponseEntity<>(courseModified, HttpStatus.NO_CONTENT);
     }
 
     @Override
