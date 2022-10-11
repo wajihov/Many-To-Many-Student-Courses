@@ -16,7 +16,7 @@
     <properties>
         <java.version>1.8</java.version>
         <project-base-package>fr.gopartner</project-base-package>
-        <start-class>fr.gopartner.ManyToManyStudentCoursesApplication</start-class>
+<!--        <start-class>fr.gopartner.ManyToManyStudentCoursesApplication</start-class>-->
     </properties>
     <dependencies>
         <dependency>
@@ -129,20 +129,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-            <!--<plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
 

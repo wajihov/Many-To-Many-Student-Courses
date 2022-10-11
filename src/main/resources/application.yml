@@ -8,7 +8,7 @@ spring:
     console:
       enabled: 'true'
   application:
-    name: entreprise-personnel
+    name: Many-To-Many-Student-courses
   liquibase:
     enabled: 'true'
     change-log: classpath:db/changelog/changelog-master.xml

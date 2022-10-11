@@ -1,5 +1,7 @@
 package fr.gopartner.domaine.course;
 
+import fr.gopartner.core.exception.StudentCourseException;
+import fr.gopartner.core.rest.Codes;
 import fr.gopartner.core.utils.CollectionUtils;
 import fr.gopartner.dto.CoursesDto;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ public class CoursesMapper {
 
     public Course toEntity(CoursesDto coursesDto) {
         if (coursesDto == null) {
-            return null;
+            throw new StudentCourseException(Codes.ERROR_COURSE_NOT_FOUND);
         }
         return Course.builder()
                 .id(coursesDto.getId())
@@ -23,7 +25,7 @@ public class CoursesMapper {
 
     public CoursesDto toDto(Course course) {
         if (course == null) {
-            return null;
+            throw new StudentCourseException(Codes.ERROR_COURSE_NOT_FOUND);
         }
         return CoursesDto.builder()
                 .id(course.getId())
@@ -32,18 +34,18 @@ public class CoursesMapper {
                 .build();
     }
 
-    public List<CoursesDto> toDtos(List<Course> courses) {
+    public List<CoursesDto> toDtoList(List<Course> courses) {
         if (CollectionUtils.isNullOrEmpty(courses)) {
-            return null;
+            throw new StudentCourseException(Codes.ERROR_COURSES_NOT_FOUND);
         }
         return courses.stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    public List<Course> toEntities(List<CoursesDto> coursesDtos) {
-        if (CollectionUtils.isNullOrEmpty(coursesDtos)) {
-            return null;
+    public List<Course> toEntities(List<CoursesDto> coursesDtoList) {
+        if (CollectionUtils.isNullOrEmpty(coursesDtoList)) {
+            throw new StudentCourseException(Codes.ERROR_COURSES_NOT_FOUND);
         }
-        return coursesDtos.stream().map(this::toEntity).collect(Collectors.toList());
+        return coursesDtoList.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
 }

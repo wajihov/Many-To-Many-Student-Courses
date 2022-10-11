@@ -55,7 +55,7 @@ public class CourseService {
         } else
             courses = courseRepository.findAll();
         log.info("The courses sought are {}.", courses.size());
-        return coursesMapper.toDtos(courses);
+        return coursesMapper.toDtoList(courses);
     }
 
     public void deleteCourse(Long id) {

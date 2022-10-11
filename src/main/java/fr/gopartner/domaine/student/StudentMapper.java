@@ -69,11 +69,11 @@ public class StudentMapper {
                 .dateBirth(String.valueOf(student.getDateBirth()))
                 .email(student.getEmail())
                 .grade(student.getGrade())
-                .courses(coursesMapper.toDtos(courses))
+                .courses(coursesMapper.toDtoList(courses))
                 .build();
     }
 
-    public List<StudentDto> toDtos(List<Student> students) {
+    public List<StudentDto> toDtoList(List<Student> students) {
         if (CollectionUtils.isNullOrEmpty(students)) {
             throw new StudentCourseException(Codes.ERROR_STUDENTS_NOT_FOUND);
         }

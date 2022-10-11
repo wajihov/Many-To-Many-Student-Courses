@@ -55,7 +55,7 @@ public class StudentService {
             students = studentRepository.findAll();
         }
         log.info("All students in the database are displayed");
-        return studentMapper.toDtos(students);
+        return studentMapper.toDtoList(students);
     }
 
     public void deleteStudent(Long id) {
@@ -78,8 +78,6 @@ public class StudentService {
     public List<StudentDto> searchStudentByName(String name) {
         List<Student> students = studentRepository.findStudentByNameContaining(name);
         log.info("The students named {} are displayed", name);
-        return studentMapper.toDtos(students);
+        return studentMapper.toDtoList(students);
     }
-
-
 }
