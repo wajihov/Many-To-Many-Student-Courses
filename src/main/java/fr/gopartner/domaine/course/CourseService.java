@@ -40,11 +40,8 @@ public class CourseService {
     }
 
     public CoursesDto findCourseById(Long id) {
-        if (id == null) {
-            throw new StudentCourseException(Codes.ERROR_COURSE_NOT_FOUND);
-        }
         Course course = searchCourseById(id);
-        log.info("Search for courses with ID {} found.", id);
+        log.info("Search for courses with ID {} found.", course.getId());
         return coursesMapper.toDto(course);
     }
 
@@ -60,15 +57,15 @@ public class CourseService {
 
     public void deleteCourse(Long id) {
         Course course = searchCourseById(id);
-        log.info("The course {} has been successfully deleted.", course.getName());
         courseRepository.delete(course);
+        log.info("The course {} has been successfully deleted.", course.getName());
     }
 
     public CoursesDto updateCourse(Long id, CoursesDto coursesDto) {
         Course course = coursesMapper.toEntity(coursesDto);
         course.setId(id);
         course = courseRepository.save(course);
-        log.info("The course was successfully changed.");
+        log.info("The course {} was successfully changed.", course.getName());
         return coursesMapper.toDto(course);
     }
 }

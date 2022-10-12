@@ -6,6 +6,7 @@ import fr.gopartner.core.utils.CollectionUtils;
 import fr.gopartner.domaine.course.Course;
 import fr.gopartner.domaine.course.CoursesMapper;
 import fr.gopartner.dto.CoursesDto;
+import fr.gopartner.dto.StudentDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class StudentMapper {
         this.coursesMapper = coursesMapper;
     }
 
-    public Student toEntity(fr.gopartner.dto.StudentDto studentDto, List<CoursesDto> coursesDtos) {
+    public Student toEntity(StudentDto studentDto, List<CoursesDto> coursesDtos) {
         if (studentDto == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
@@ -37,7 +38,7 @@ public class StudentMapper {
         return student;
     }
 
-    public Student toEntity(fr.gopartner.dto.StudentDto studentDto) {
+    public Student toEntity(StudentDto studentDto) {
         if (studentDto == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }

@@ -133,7 +133,7 @@ class StudentControllerTest {
             }
         };
         Mockito.when(studentService.findAllStudents(Mockito.anyString())).thenReturn(studentsListDto);
-        //
+        //WHEN && THEN
         mockMvc.perform(get("/students")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
