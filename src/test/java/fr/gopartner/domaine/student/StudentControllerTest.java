@@ -13,13 +13,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -35,7 +34,7 @@ class StudentControllerTest {
     @Test
     void studentDto_WHEN_createStudent_THEN_SHOULD_Get_Response_CREATED() throws Exception {
         //GIVEN
-        fr.gopartner.dto.StudentDto studentDto = new fr.gopartner.dto.StudentDto();
+        StudentDto studentDto = new StudentDto();
         studentDto.setId(1L);
         studentDto.setName("Stephane");
         studentDto.setLastname("Sharai");
@@ -66,7 +65,8 @@ class StudentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.asJsonString(studentDto)))
                 .andExpect(status().isCreated())
-                .andExpect(content().string(IsAnything.anything()));
+                .andExpect(content().string(IsAnything.anything()))
+                .andExpect(jsonPath("$.name").value("Stephane"));
     }
 
     @Test
@@ -82,11 +82,39 @@ class StudentControllerTest {
     @Test
     void GIVEN_studentId_WHEN_findStudentById_THEN_should_get_student_from_database() throws Exception {
         //GIVEN
-        long studentId = 2L;
+        long studentId = 1L;
+        StudentDto studentDto = new StudentDto();
+        studentDto.setId(1L);
+        studentDto.setName("Stephane");
+        studentDto.setLastname("Sharai");
+        studentDto.setEmail("stephane@gmail.com");
+        studentDto.setGrade("level 3");
+        studentDto.setDateBirth("1999-12-01");
+
+        CoursesDto firstCoursesDto = new CoursesDto();
+        firstCoursesDto.setId(1L);
+        firstCoursesDto.setName("English");
+        firstCoursesDto.setName("Learn the language of shakespeare");
+
+        CoursesDto secondCoursesDto = new CoursesDto();
+        secondCoursesDto.setId(2L);
+        secondCoursesDto.setName("Physique");
+        secondCoursesDto.setDescription("the science of life");
+        List<CoursesDto> coursesDtoList = new ArrayList<CoursesDto>() {
+            {
+                add(firstCoursesDto);
+                add(secondCoursesDto);
+            }
+        };
+        studentDto.setCourses(coursesDtoList);
+
+        Mockito.when(studentService.findStudentById(Mockito.anyLong())).thenReturn(studentDto);
         //WHEN && THEN
         mockMvc.perform(get("/students/" + studentId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.asJsonString(studentDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Stephane"));
     }
 
     @Test
@@ -126,7 +154,7 @@ class StudentControllerTest {
         secondStudentDto.setDateBirth("1996-04-06");
         secondStudentDto.setCourses(coursesDtoList);
 
-        List<StudentDto> studentsListDto = new ArrayList<StudentDto>()  {
+        List<StudentDto> studentsListDto = new ArrayList<StudentDto>() {
             {
                 add(studentDto);
                 add(secondStudentDto);
@@ -134,10 +162,10 @@ class StudentControllerTest {
         };
         Mockito.when(studentService.findAllStudents(Mockito.anyString())).thenReturn(studentsListDto);
         //WHEN && THEN
-        mockMvc.perform(get("/students")
+        mockMvc.perform(get("/students?name=")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(IsAnything.anything()));
+                .andExpect(content().string(JsonUtils.asJsonString(studentsListDto)));
     }
 
     @Test
