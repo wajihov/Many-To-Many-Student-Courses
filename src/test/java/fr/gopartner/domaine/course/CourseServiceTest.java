@@ -53,6 +53,15 @@ class CourseServiceTest {
     }
 
     @Test
+    void GIVEN_coursesDto_null_WHEN_CreateCourse_THEN_Should_return_Exception() {
+        //GIVEN && THEN
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            courseService.createCourse(null);
+        });
+        Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
+    }
+
+    @Test
     void GIVEN_coursesId_WHEN_findCourseById_THEN_Should_get_on_database() {
         //GIVEN
         long courseId = 5L;

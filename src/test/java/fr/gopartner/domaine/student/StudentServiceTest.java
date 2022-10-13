@@ -102,6 +102,15 @@ class StudentServiceTest {
     }
 
     @Test
+    void GIVEN_studentDto_null_WHEN_CreateStudent_THEN_Should_return_Exception() {
+        //GIVEN && THEN
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+            studentService.createStudent(null);
+        });
+        Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
+    }
+
+    @Test
     void GIVEN_StudentDto_WHEN_findStudentById_THEN_Should_find_on_database() {
         //GIVEN
         var studentDto = new StudentDto();

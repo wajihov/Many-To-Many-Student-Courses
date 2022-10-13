@@ -3,15 +3,12 @@ package fr.gopartner.domaine.student;
 import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.core.rest.Codes;
 import fr.gopartner.core.utils.StringUtils;
-import fr.gopartner.domaine.course.CourseService;
-import fr.gopartner.dto.CoursesDto;
 import fr.gopartner.dto.StudentDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -20,12 +17,11 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
-    private final CourseService courseService;
 
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper, CourseService courseService) {
+
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
-        this.courseService = courseService;
     }
 
     private Student searchStudent(Long id) {
@@ -34,7 +30,10 @@ public class StudentService {
         return student;
     }
 
-    public StudentDto createStudent(fr.gopartner.dto.StudentDto studentDto) {
+    public StudentDto createStudent(StudentDto studentDto) {
+        if (studentDto == null) {
+            throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
+        }
         Student student = studentMapper.toEntity(studentDto);
         student = studentRepository.save(student);
         log.info("the student {} is saved successfully", student.getName());
@@ -65,9 +64,6 @@ public class StudentService {
     }
 
     public StudentDto updateStudent(Long id, StudentDto studentDto) {
-        /*List<CoursesDto> coursesDtoList = studentDto.getCourses();
-        coursesDtoList = coursesDtoList.stream().map(coursesDto ->
-                courseService.updateCourse(coursesDto.getId(), coursesDto)).collect(Collectors.toList());*/
         Student student = studentMapper.toEntity(studentDto);
         student.setId(id);
         student = studentRepository.save(student);
