@@ -1,5 +1,6 @@
 package fr.gopartner.domaine.course;
 
+import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.dto.CoursesDto;
 import lombok.var;
 import org.junit.jupiter.api.Assertions;
@@ -18,11 +19,9 @@ import java.util.List;
 class CourseServiceTest {
 
     @MockBean
-    private CourseRepository courseRepository;
-
-    @MockBean
     CoursesMapper coursesMapper;
-
+    @MockBean
+    private CourseRepository courseRepository;
     @Autowired
     private CourseService courseService;
 
@@ -53,9 +52,9 @@ class CourseServiceTest {
     }
 
     @Test
-    void GIVEN_coursesDto_null_WHEN_CreateCourse_THEN_Should_return_Exception() {
+    void GIVEN_coursesDto_null_WHEN_CreateCourse_THEN_Should_return_StudentCourseException() {
         //GIVEN && THEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             courseService.createCourse(null);
         });
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
@@ -219,11 +218,11 @@ class CourseServiceTest {
     }
 
     @Test
-    void Given_course_WHEN_toEntity_THEN_SHOULD_return_RuntimeException() {
+    void Given_course_WHEN_toEntity_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
         var course = new Course();
         Mockito.when(courseRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(course));
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             courseService.findCourseById(null);
         });
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());

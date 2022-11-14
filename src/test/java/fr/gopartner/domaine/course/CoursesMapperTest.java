@@ -1,5 +1,6 @@
 package fr.gopartner.domaine.course;
 
+import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.dto.CoursesDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -95,36 +96,36 @@ class CoursesMapperTest {
     }
 
     @Test
-    void Given_course_WHEN_toEntity_THEN_SHOULD_return_RuntimeException() {
+    void Given_course_WHEN_toEntity_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             coursesMapper.toEntity(null);
         });
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
     }
 
     @Test
-    void Given_courseDto_WHEN_toDto_THEN_SHOULD_return_RuntimeException() {
+    void Given_courseDto_WHEN_toDto_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             coursesMapper.toDto(null);
         });
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
     }
 
     @Test
-    void Given_courseDtoList_WHEN_toDtoList_THEN_SHOULD_return_RuntimeException() {
+    void Given_courseDtoList_WHEN_toDtoList_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             coursesMapper.toDtoList(null);
         });
         Assertions.assertEquals("COURSES NOT FOUND", e.getMessage());
     }
 
     @Test
-    void Given_courseList_WHEN_toEntitiesList_THEN_SHOULD_return_RuntimeException() {
+    void Given_courseList_WHEN_toEntitiesList_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             coursesMapper.toEntities(null);
         });
         Assertions.assertEquals("COURSES NOT FOUND", e.getMessage());

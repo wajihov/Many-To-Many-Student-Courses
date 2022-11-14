@@ -1,5 +1,6 @@
 package fr.gopartner.domaine.student;
 
+import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.domaine.course.Course;
 import fr.gopartner.dto.CoursesDto;
 import fr.gopartner.dto.StudentDto;
@@ -489,11 +490,11 @@ class StudentServiceTest {
     }
 
     @Test
-    void Given_student_WHEN_toEntity_THEN_SHOULD_return_RuntimeException() {
+    void Given_student_WHEN_toEntity_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
         var student = new Student();
         Mockito.when(studentRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(student));
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             studentService.findStudentById(null);
         });
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
