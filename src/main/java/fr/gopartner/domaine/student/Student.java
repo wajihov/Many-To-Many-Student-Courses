@@ -39,6 +39,4 @@ public class Student {
             }
     )
     private List<Course> courses = new ArrayList<>();
-
-
 }

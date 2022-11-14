@@ -22,4 +22,4 @@ spring:
     serialization:
       write_dates_as_timestamps: 'false'
 server:
-  port : 8083
+  port : 8081

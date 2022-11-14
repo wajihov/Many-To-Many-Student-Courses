@@ -3,6 +3,7 @@ package fr.gopartner.domaine.course;
 import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.core.rest.Codes;
 import fr.gopartner.core.utils.CollectionUtils;
+import fr.gopartner.domaine.student.StudentMapper;
 import fr.gopartner.dto.CoursesDto;
 import org.springframework.stereotype.Service;
 

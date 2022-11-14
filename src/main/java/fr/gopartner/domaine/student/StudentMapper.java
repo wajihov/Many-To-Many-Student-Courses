@@ -22,7 +22,7 @@ public class StudentMapper {
         this.coursesMapper = coursesMapper;
     }
 
-    public Student toEntity(StudentDto studentDto, List<CoursesDto> coursesDtos) {
+    public Student toEntity(StudentDto studentDto, List<CoursesDto> coursesDtoList) {
         if (studentDto == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
@@ -33,7 +33,7 @@ public class StudentMapper {
                 .email(studentDto.getEmail())
                 .grade(studentDto.getGrade())
                 .dateBirth(LocalDate.parse(studentDto.getDateBirth()))
-                .courses(coursesMapper.toEntities(coursesDtos))
+                .courses(coursesMapper.toEntities(coursesDtoList))
                 .build();
         return student;
     }
@@ -42,7 +42,7 @@ public class StudentMapper {
         if (studentDto == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
-        List<CoursesDto> coursesDtos = studentDto.getCourses();
+        List<CoursesDto> coursesDtoList = studentDto.getCourses();
         Student student = Student.builder()
                 .id(studentDto.getId())
                 .name(studentDto.getName())
@@ -50,19 +50,17 @@ public class StudentMapper {
                 .email(studentDto.getEmail())
                 .grade(studentDto.getGrade())
                 .dateBirth(LocalDate.parse(studentDto.getDateBirth()))
-                .courses(coursesMapper.toEntities(coursesDtos))
+                .courses(coursesMapper.toEntities(coursesDtoList))
                 .build();
         return student;
-
-
     }
 
-    public fr.gopartner.dto.StudentDto toDto(Student student) {
+    public StudentDto toDto(Student student) {
         if (student == null) {
             throw new StudentCourseException(Codes.ERROR_STUDENT_NOT_FOUND);
         }
         List<Course> courses = student.getCourses();
-        return fr.gopartner.dto.StudentDto.builder()
+        StudentDto studentDto = StudentDto.builder()
                 .id(student.getId())
                 .name(student.getName())
                 .lastname(student.getLastname())
@@ -71,9 +69,10 @@ public class StudentMapper {
                 .grade(student.getGrade())
                 .courses(coursesMapper.toDtoList(courses))
                 .build();
+        return studentDto;
     }
 
-    public List<fr.gopartner.dto.StudentDto> toDtoList(List<Student> students) {
+    public List<StudentDto> toDtoList(List<Student> students) {
         if (CollectionUtils.isNullOrEmpty(students)) {
             throw new StudentCourseException(Codes.ERROR_STUDENTS_NOT_FOUND);
         }

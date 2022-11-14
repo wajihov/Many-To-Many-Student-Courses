@@ -1,7 +1,9 @@
 package fr.gopartner.domaine.student;
 
+import fr.gopartner.core.exception.StudentCourseException;
 import fr.gopartner.domaine.course.Course;
 import fr.gopartner.dto.CoursesDto;
+import fr.gopartner.dto.StudentDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,41 @@ class StudentMapperTest {
         Assertions.assertEquals(student.getDateBirth(), LocalDate.parse(studentDto.getDateBirth()));
         Assertions.assertEquals(student.getEmail(), studentDto.getEmail());
         Assertions.assertEquals(student.getCourses().size(), studentDto.getCourses().size());
+    }
+
+    @Test
+    void Given_studentDto_WHEN_toStudent_THEN_SHOULD_return_student_2() {
+        //GIVEN
+        fr.gopartner.dto.StudentDto studentDto = new fr.gopartner.dto.StudentDto();
+        studentDto.setId(2L);
+        studentDto.setName("jack");
+        studentDto.setLastname("Jacopo");
+        studentDto.setGrade("level 2");
+        studentDto.setDateBirth("1997-12-05");
+
+        CoursesDto coursesDto = new CoursesDto();
+        coursesDto.setId(3L);
+        coursesDto.setName("French");
+        coursesDto.setDescription("the language of Moliere");
+
+        List<CoursesDto> coursesDtoList = new ArrayList<>();
+        coursesDtoList.add(coursesDto);
+        //WHEN
+        Student student = studentMapper.toEntity(studentDto, coursesDtoList);
+        //THEN
+        Assertions.assertEquals(student.getId(), studentDto.getId());
+        Assertions.assertEquals(student.getName(), studentDto.getName());
+        Assertions.assertEquals(student.getLastname(), studentDto.getLastname());
+        Assertions.assertEquals(student.getGrade(), studentDto.getGrade());
+        Assertions.assertEquals(student.getEmail(), studentDto.getEmail());
+        Assertions.assertEquals(student.getDateBirth(), LocalDate.parse(studentDto.getDateBirth()));
+        Assertions.assertEquals(student.getCourses().size(), coursesDtoList.size());
+        for (int i = 0; i < coursesDtoList.size(); i++) {
+            Assertions.assertEquals(student.getCourses().get(i).getId(), coursesDtoList.get(i).getId());
+            Assertions.assertEquals(student.getCourses().get(i).getName(), coursesDtoList.get(i).getName());
+            Assertions.assertEquals(student.getCourses().get(i).getDescription(), coursesDtoList.get(i).getDescription());
+        }
+
     }
 
     @Test
@@ -122,11 +159,14 @@ class StudentMapperTest {
                 add(course2);
             }
         });
-        List<Student> studentList = new ArrayList<>();
-        studentList.add(firstStudent);
-        studentList.add(secondStudent);
+        List<Student> studentList = new ArrayList<Student>() {
+            {
+                add(firstStudent);
+                add(secondStudent);
+            }
+        };
         //WHEN
-        List<fr.gopartner.dto.StudentDto> studentDtoList = studentMapper.toDtoList(studentList);
+        List<StudentDto> studentDtoList = studentMapper.toDtoList(studentList);
         //THEN
         Assertions.assertEquals(studentList.size(), studentDtoList.size());
         for (int i = 0; i < studentDtoList.size(); i++) {
@@ -146,45 +186,42 @@ class StudentMapperTest {
     }
 
     @Test
-    void Given_listStudent_WHEN_toDtoList_THEN_SHOULD_return_RuntimeException() {
-        //GIVEN
-        List<Student> students = new ArrayList<>();
+    void Given_listStudent_WHEN_toDtoList_THEN_SHOULD_return_StudentCourseException() {
         //WHEN
         RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            studentMapper.toDtoList(students);
+            studentMapper.toDtoList(null);
         });
         Assertions.assertEquals("STUDENTS NOT FOUND", e.getMessage());
     }
 
     @Test
-    void Given_Student_WHEN_toDto_THEN_SHOULD_return_RuntimeException() {
+    void Given_Student_WHEN_toDto_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             studentMapper.toDto(null);
         });
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 
     @Test
-    void Given_StudentDto_WHEN_toEntity_THEN_SHOULD_return_RuntimeException() {
+    void Given_StudentDto_WHEN_toEntity_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             studentMapper.toEntity(null);
         });
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 
     @Test
-    void Given_StudentDto_WHEN_toEntity_have_2_Param_THEN_SHOULD_return_RuntimeException() {
+    void Given_StudentDto_WHEN_toEntity_have_2_Param_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN
         List<CoursesDto> coursesDtoList = new ArrayList<>();
         //WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
             studentMapper.toEntity(null, coursesDtoList);
         });
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
-
 
 }
 
