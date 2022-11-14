@@ -98,36 +98,36 @@ class CoursesMapperTest {
     @Test
     void Given_course_WHEN_toEntity_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            coursesMapper.toEntity(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                coursesMapper.toEntity(null)
+        );
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
     }
 
     @Test
     void Given_courseDto_WHEN_toDto_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            coursesMapper.toDto(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                coursesMapper.toDto(null)
+        );
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
     }
 
     @Test
     void Given_courseDtoList_WHEN_toDtoList_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            coursesMapper.toDtoList(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                coursesMapper.toDtoList(null)
+        );
         Assertions.assertEquals("COURSES NOT FOUND", e.getMessage());
     }
 
     @Test
     void Given_courseList_WHEN_toEntitiesList_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            coursesMapper.toEntities(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                coursesMapper.toEntities(null)
+        );
         Assertions.assertEquals("COURSES NOT FOUND", e.getMessage());
     }
 }

@@ -116,6 +116,4 @@ class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(JsonUtils.asJsonString(coursesDto)));
     }
-
-
 }

@@ -188,27 +188,27 @@ class StudentMapperTest {
     @Test
     void Given_listStudent_WHEN_toDtoList_THEN_SHOULD_return_StudentCourseException() {
         //WHEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            studentMapper.toDtoList(null);
-        });
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () ->
+                studentMapper.toDtoList(null)
+        );
         Assertions.assertEquals("STUDENTS NOT FOUND", e.getMessage());
     }
 
     @Test
     void Given_Student_WHEN_toDto_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            studentMapper.toDto(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                studentMapper.toDto(null)
+        );
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 
     @Test
     void Given_StudentDto_WHEN_toEntity_THEN_SHOULD_return_StudentCourseException() {
         //GIVEN & WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            studentMapper.toEntity(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                studentMapper.toEntity(null)
+        );
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 
@@ -217,9 +217,9 @@ class StudentMapperTest {
         //GIVEN
         List<CoursesDto> coursesDtoList = new ArrayList<>();
         //WHEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            studentMapper.toEntity(null, coursesDtoList);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                studentMapper.toEntity(null, coursesDtoList)
+        );
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 

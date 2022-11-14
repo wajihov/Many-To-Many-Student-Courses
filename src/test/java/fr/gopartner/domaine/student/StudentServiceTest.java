@@ -105,9 +105,9 @@ class StudentServiceTest {
     @Test
     void GIVEN_studentDto_null_WHEN_CreateStudent_THEN_Should_return_Exception() {
         //GIVEN && THEN
-        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> {
-            studentService.createStudent(null);
-        });
+        RuntimeException e = Assertions.assertThrows(RuntimeException.class, () ->
+                studentService.createStudent(null)
+        );
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 
@@ -170,7 +170,7 @@ class StudentServiceTest {
         Assertions.assertEquals(student.getEmail(), studentDto.getEmail());
         Assertions.assertEquals(student.getGrade(), studentDto.getGrade());
         boolean testDateBirth = student.getDateBirth().isEqual(LocalDate.parse(studentDto.getDateBirth()));
-        Assertions.assertEquals(true, testDateBirth);
+        Assertions.assertTrue(testDateBirth);
         Assertions.assertEquals(student.getCourses().size(), studentDto.getCourses().size());
         for (int i = 0; i < studentDto.getCourses().size(); i++) {
             Assertions.assertEquals(student.getCourses().get(i).getId(), studentDto.getCourses().get(i).getId());
@@ -415,7 +415,7 @@ class StudentServiceTest {
         Assertions.assertEquals(studentVerified.getEmail(), firstStudent.getEmail());
         Assertions.assertEquals(studentVerified.getGrade(), firstStudent.getGrade());
         boolean testDateBirth = studentVerified.getDateBirth().isEqual(firstStudent.getDateBirth());
-        Assertions.assertEquals(testDateBirth, true);
+        Assertions.assertTrue(testDateBirth);
         for (int i = 0; i < studentVerified.getCourses().size(); i++) {
             Assertions.assertEquals(studentVerified.getCourses().get(i).getId(), firstStudent.getCourses().get(i).getId());
             Assertions.assertEquals(studentVerified.getCourses().get(i).getName(), firstStudent.getCourses().get(i).getName());
@@ -481,7 +481,7 @@ class StudentServiceTest {
         Assertions.assertEquals(studentDtoUpdate.getEmail(), secondStudentDto.getEmail());
         Assertions.assertEquals(studentDtoUpdate.getGrade(), secondStudentDto.getGrade());
         boolean testDateBirth = studentDtoUpdate.getDateBirth().equals(secondStudentDto.getDateBirth());
-        Assertions.assertEquals(testDateBirth, true);
+        Assertions.assertTrue(testDateBirth);
         for (int i = 0; i < secondStudentDto.getCourses().size(); i++) {
             Assertions.assertEquals(studentDtoUpdate.getCourses().get(i).getId(), secondStudentDto.getCourses().get(i).getId());
             Assertions.assertEquals(studentDtoUpdate.getCourses().get(i).getName(), secondStudentDto.getCourses().get(i).getName());
@@ -494,9 +494,9 @@ class StudentServiceTest {
         //GIVEN & WHEN
         var student = new Student();
         Mockito.when(studentRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(student));
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            studentService.findStudentById(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                studentService.findStudentById(null)
+        );
         Assertions.assertEquals("STUDENT NOT FOUND", e.getMessage());
     }
 }

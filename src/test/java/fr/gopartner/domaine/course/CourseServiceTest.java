@@ -54,9 +54,9 @@ class CourseServiceTest {
     @Test
     void GIVEN_coursesDto_null_WHEN_CreateCourse_THEN_Should_return_StudentCourseException() {
         //GIVEN && THEN
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            courseService.createCourse(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                courseService.createCourse(null)
+        );
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
     }
 
@@ -222,9 +222,9 @@ class CourseServiceTest {
         //GIVEN & WHEN
         var course = new Course();
         Mockito.when(courseRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(course));
-        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () -> {
-            courseService.findCourseById(null);
-        });
+        StudentCourseException e = Assertions.assertThrows(StudentCourseException.class, () ->
+                courseService.findCourseById(null)
+        );
         Assertions.assertEquals("COURSE NOT FOUND", e.getMessage());
     }
 
